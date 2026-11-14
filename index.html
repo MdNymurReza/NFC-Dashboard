@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1020">
+  <title>Profile</title>
+  <meta name="description" content="Digital visiting card">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a1020'/%3E%3Cpath d='M18 46V18l28 28V18' stroke='%23d4af37' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Intro loader -->
+  <div id="loader" aria-hidden="true">
+    <div class="curtain top"></div>
+    <div class="curtain bottom"></div>
+    <div class="loader-inner">
+      <svg class="monogram" viewBox="0 0 200 200">
+        <circle class="ring" cx="100" cy="100" r="86"/>
+        <circle class="ring ring-2" cx="100" cy="100" r="94"/>
+        <text id="loader-initials" x="100" y="100" text-anchor="middle" dominant-baseline="central"></text>
+      </svg>
+      <div class="loader-line"></div>
+      <div class="loader-name" id="loader-name"></div>
+    </div>
+  </div>
+
+  <div id="progress" aria-hidden="true"></div>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div id="spot" aria-hidden="true"></div>
+  <button id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <main id="app">
+    <!-- HERO -->
+    <header class="hero" id="hero">
+      <div class="avatar-wrap reveal zoom">
+        <div class="halo"></div>
+        <div class="orbit o1"><i></i></div>
+        <div class="orbit o2"><i></i></div>
+        <div class="orbit o3"><i></i></div>
+        <div class="avatar-ring"></div>
+        <div class="avatar" id="avatar"></div>
+      </div>
+      <p class="eyebrow reveal" id="title"></p>
+      <h1 class="name" id="name"></h1>
+      <p class="typed reveal"><span id="typed"></span><span class="caret">|</span></p>
+      <p class="affil reveal" id="affil"></p>
+      <div class="actions reveal">
+        <button class="btn primary" id="save-contact" type="button">
+          <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg>
+          Save Contact
+        </button>
+        <button class="btn" id="share" type="button">
+          <svg viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.4 1.2l-6.7-3.4a3 3 0 0 0 0-1.6l6.7-3.4A3 3 0 1 0 15 7l-6.7 3.4a3 3 0 1 0 0 3.2L15 17a3 3 0 1 0 3-1Z"/></svg>
+          Share
+        </button>
+      </div>
+      <a class="scroll-hint" href="#about" aria-label="Scroll down"><span></span></a>
+    </header>
+
+    <section id="about" class="section" data-key="bio">
+      <h2 class="section-title reveal">About</h2>
+      <div class="card reveal"><p id="bio" class="bio"></p></div>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section id="links-section" class="section" data-key="links">
+      <h2 class="section-title reveal">Connect</h2>
+      <div class="links" id="links"></div>
+    </section>
+
+    <section id="expertise-section" class="section" data-key="expertise">
+      <h2 class="section-title reveal">Research Interests</h2>
+      <div class="chips" id="expertise"></div>
+    </section>
+
+    <section id="timeline-section" class="section" data-key="timeline">
+      <h2 class="section-title reveal">Experience</h2>
+      <ul class="timeline" id="timeline"></ul>
+    </section>
+
+    <section id="education-section" class="section" data-key="education">
+      <h2 class="section-title reveal">Education</h2>
+      <div class="edu" id="education"></div>
+    </section>
+
+    <section id="awards-section" class="section" data-key="awards">
+      <h2 class="section-title reveal">Honours &amp; Awards</h2>
+      <div class="awards" id="awards"></div>
+    </section>
+
+    <section id="papers-section" class="section" data-key="papers">
+      <h2 class="section-title reveal">Publications</h2>
+      <ol class="papers" id="papers"></ol>
+      <div class="more-wrap"><button class="btn" id="papers-more" type="button" hidden>Show all</button></div>
+    </section>
+
+    <section id="docs-section" class="section" data-key="documents">
+      <h2 class="section-title reveal">Documents</h2>
+      <div class="docs" id="docs"></div>
+    </section>
+
+    <section id="contact-section" class="section" data-key="contact">
+      <h2 class="section-title reveal">Contact</h2>
+      <div class="contact card reveal" id="contact"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="flourish" aria-hidden="true">✦</div>
+      <p id="dedication"></p>
+    </footer>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
